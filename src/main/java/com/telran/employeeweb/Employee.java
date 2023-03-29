@@ -1,28 +1,22 @@
 package com.telran.employeeweb;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.UUID;
 
+@Getter
+@Setter
 public class Employee {
 
     private String id;
 
     private String name;
 
-    public String getId() {
-        return id;
-    }
+    private String surname;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    private int age;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Employee(String id, String name) {
         this.id = id;
