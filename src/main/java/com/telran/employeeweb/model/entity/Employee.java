@@ -1,4 +1,4 @@
-package com.telran.employeeweb;
+package com.telran.employeeweb.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
