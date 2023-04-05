@@ -27,8 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Optional<Employee> findEmployeeByIdAndName(String id, String name) {
         List<Employee> employees = repository.getAll();
-        employees.stream().filter(employee -> {
-            if (id != null){
+        Optional<Employee> found = employees.stream().filter(employee -> {
+            if (id != null) {
                 if (name != null) {
                     return employee.getId().equals(id) && employee.getName().equals(name);
                 } else {
@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
             return employee.getName().equals(name);
         }).findAny();
-        return Optional.empty();
+        return found;
     }
 
     @Override
