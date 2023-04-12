@@ -45,14 +45,18 @@
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
         </dependency>
+<!--        XML REST data format-->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
+<!--        JSP pages support for tomcat server-->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
         </dependency>
+<!--        jstl (Jakarta Standard Tag Library)-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>

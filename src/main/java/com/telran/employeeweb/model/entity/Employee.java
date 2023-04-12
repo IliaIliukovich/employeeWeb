@@ -17,6 +17,8 @@ public class Employee {
 
     private int age;
 
+    public Employee() {
+    }
 
     public Employee(String id, String name) {
         this.id = id;
