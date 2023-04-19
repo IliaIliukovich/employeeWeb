@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees List</title>
+
+    <link rel="stylesheet" href="/style.css" type="text/css"/>
+</head>
+<body>
+
+<h2>Employees</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Id</th>
+        <th>Age</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee, iter : ${employees}"
+        th:style="${iter.odd}? 'font-weight: bold;'">
+        <td th:text="${iter.index}+1"></td>
+        <td th:text="${employee.name}"></td>
+        <td th:text="${employee.surname}"></td>
+        <td th:text="${employee.id}"></td>
+        <td th:text="${employee.age}"></td>
+        <td>
+            <form th:action="@{/employees/delete}" th:method="post">
+                <div>
+                    <input type="hidden" th:value="${employee.id}" name="employeeId">
+                </div>
+                <div>
+                    <button type="submit">Delete</button>
+                </div>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Add new Employee:</h2>
+
+<form th:action="@{/employees}" th:object="${employeeToAdd}" th:method="post">
+    <div>
+        <label>Name:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{name}">
+        </label>
+    </div>
+    <div>
+        <label>Surname:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{surname}">
+        </label>
+    </div>
+    <div>
+        <label>Id:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{id}">
+        </label>
+    </div>
+    <div>
+        <label>Age:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{age}">
+        </label>
+    </div>
+    <div>
+        <button type="submit">Add</button>
+    </div>
+</form>
+
+<div th:if="${deleted}">
+    Employee with id <span th:text="${deleted}"></span> successfully deleted
+</div>
+<div th:if="${added}">
+    Employee with id <span th:text="${added}"></span> successfully added
+</div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees Search</title>
+
+    <link rel="stylesheet" href="/style.css" type="text/css"/>
+</head>
+<body>
+
+<div class="container">
+
+    <div th:if="${employeeToFind}">
+        <h2>Employee</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Id</th>
+                <th>Age</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${employeeToFind.name}"></td>
+                <td th:text="${employeeToFind.surname}"></td>
+                <td th:text="${employeeToFind.id}"></td>
+                <td th:text="${employeeToFind.age}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:unless="${employeeToFind}">
+        <p th:text="${notPresentMessage}"></p>
+    </div>
+
+</div>
+
+</body>
+</html>
