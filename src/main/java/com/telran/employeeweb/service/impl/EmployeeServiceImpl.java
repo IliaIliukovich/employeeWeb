@@ -21,12 +21,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getEmployees() {
-        return repository.getAll();
+        return repository.findAll();
     }
 
     @Override
     public Optional<Employee> findEmployeeByIdAndName(String id, String name) {
-        List<Employee> employees = repository.getAll();
+        List<Employee> employees = repository.findAll();
         Optional<Employee> found = employees.stream().filter(employee -> {
             if (id != null) {
                 if (name != null) {
@@ -42,19 +42,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void add(Employee employee) {
-        repository.add(employee);
+        repository.save(employee);
     }
 
     @Override
     public boolean updateEmployee(Employee employee) {
-        List<Employee> employees = repository.getAll();
+        List<Employee> employees = repository.findAll();
         for (int i = 0; i < employees.size(); i++) {
             if (employees.get(i).getId().equals(employee.getId())){
-                repository.updateById(employee);
+                repository.save(employee);
                 return true;
             }
         }
-        repository.add(employee);
+        repository.save(employee);
         return false;
     }
 
@@ -70,6 +70,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteEmployee(String id) {
-        repository.deleteEmployee(id);
+        repository.deleteById(id);
     }
 }
