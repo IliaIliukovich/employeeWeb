@@ -26,11 +26,11 @@ public class EmployeeRestController {
         return service.getEmployees();
     }
 
-    @GetMapping(value = "/find")
-    public Optional<Employee>findEmployee(@RequestParam(required = false) String id,
-                                          @RequestParam(required = false) String name){
-        return service.findEmployeeByIdAndName(id, name);
-    }
+//    @GetMapping(value = "/find")
+//    public Optional<Employee>findEmployee(@RequestParam(required = false) String id,
+//                                          @RequestParam(required = false) String name){
+//        return service.findEmployeeByNameAndSurname(id, name);
+//    }
 
     @PostMapping
     public Employee addEmployee(@RequestBody Employee employee) {

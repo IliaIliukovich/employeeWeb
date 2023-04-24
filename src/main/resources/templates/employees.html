@@ -29,6 +29,16 @@
         <td th:text="${employee.id}"></td>
         <td th:text="${employee.age}"></td>
         <td>
+            <form th:action="@{/employees/edit}" th:method="post">
+                <div>
+                    <input type="hidden" th:value="${employee.id}" name="employeeId">
+                </div>
+                <div>
+                    <button type="submit">Edit</button>
+                </div>
+            </form>
+        </td>
+        <td>
             <form th:action="@{/employees/delete}" th:method="post">
                 <div>
                     <input type="hidden" th:value="${employee.id}" name="employeeId">

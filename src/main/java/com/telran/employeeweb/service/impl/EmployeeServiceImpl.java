@@ -25,19 +25,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Employee> findEmployeeByIdAndName(String id, String name) {
-        List<Employee> employees = repository.findAll();
-        Optional<Employee> found = employees.stream().filter(employee -> {
-            if (id != null) {
-                if (name != null) {
-                    return employee.getId().equals(id) && employee.getName().equals(name);
-                } else {
-                    return employee.getId().equals(id);
-                }
-            }
-            return employee.getName().equals(name);
-        }).findAny();
-        return found;
+    public List<Employee> findEmployeeByNameAndSurname(String name, String surname) {
+        return repository.findAllByNameOrSurname(name, surname);
+    }
+
+    @Override
+    public Optional<Employee> findById(String id) {
+        return repository.findById(id);
     }
 
     @Override
@@ -47,12 +41,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public boolean updateEmployee(Employee employee) {
-        List<Employee> employees = repository.findAll();
-        for (int i = 0; i < employees.size(); i++) {
-            if (employees.get(i).getId().equals(employee.getId())){
-                repository.save(employee);
-                return true;
-            }
+        Optional<Employee> byId = repository.findById(employee.getId());
+        if (byId.isPresent()){
+            repository.save(employee);
+            return true;
         }
         repository.save(employee);
         return false;
@@ -60,12 +52,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updateEmployeeSurnameAndAge(String id, String surname, int age) {
-        Employee employee = repository.getById(id);
-        if (employee != null) {
+        Optional<Employee> byId = repository.findById(id);
+        if (byId.isPresent()) {
+            Employee employee = byId.get();
             employee.setSurname(surname);
             employee.setAge(age);
+            repository.save(employee);
+            return repository.findById(id).orElse(null);
         }
-        return employee;
+        return null;
     }
 
     @Override

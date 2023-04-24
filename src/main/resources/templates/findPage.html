@@ -9,9 +9,10 @@
 <body>
 
 <div class="container">
+    <div th:if="${foundEmployees}">
 
-    <div th:if="${employeeToFind}">
-        <h2>Employee</h2>
+        <h2>Employees</h2>
+
         <table>
             <thead>
             <tr>
@@ -23,16 +24,18 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td th:text="${employeeToFind.name}"></td>
-                <td th:text="${employeeToFind.surname}"></td>
-                <td th:text="${employeeToFind.id}"></td>
-                <td th:text="${employeeToFind.age}"></td>
+            <tr th:each="employee, iter : ${foundEmployees}"
+                th:style="${iter.odd}? 'font-weight: bold;'">
+                <td th:text="${iter.index}+1"></td>
+                <td th:text="${employee.name}"></td>
+                <td th:text="${employee.surname}"></td>
+                <td th:text="${employee.id}"></td>
+                <td th:text="${employee.age}"></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <div th:unless="${employeeToFind}">
+    <div th:unless="${foundEmployees}">
         <p th:text="${notPresentMessage}"></p>
     </div>
 

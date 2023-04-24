@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
+    List<Employee> findAllByNameOrSurname(String name, String surname);
+
 }
