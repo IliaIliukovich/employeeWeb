@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Employee Page</title>
+</head>
+<body>
+
+<h2>Confirm changes to employee:</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>Id</th>
+    <th>Age</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td th:text="${editEmployee.name}"></td>
+    <td th:text="${editEmployee.surname}"></td>
+    <td th:text="${editEmployee.id}"></td>
+    <td th:text="${editEmployee.age}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<form th:action="@{/employees/confirmPage}" th:method="post">
+  <div>
+    <input type="hidden" th:value="${editEmployee.id}" name="employeeId">
+  </div>
+  <div>
+    <button type="submit">Confirm</button>
+  </div>
+</form>
+
+
+</body>
+</html>

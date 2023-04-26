@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees Search</title>
+
+    <link rel="stylesheet" href="/style.css" type="text/css"/>
+</head>
+<body>
+
+<div class="container">
+        <h2>Employees By Age Search:</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Id</th>
+                <th>Age</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th><a th:href="@{/employees/findByAge(age=${param.age}, page=0, sort='name')}">A->Z</a></th>
+                <th><a th:href="@{/employees/findByAge(age=${param.age}, page=0, sort='surname')}">A->Z</a></th>
+                <th></th>
+                <th><a th:href="@{/employees/findByAge(age=${param.age}, page=0, sort='age')}">0->9</a></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Z->A</th>
+                <th>Z->A</th>
+                <th></th>
+                <th>9->0</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee, iter : ${page.content}"
+                th:style="${iter.odd}? 'font-weight: bold;'">
+                <td th:text="${iter.index}+1"></td>
+                <td th:text="${employee.name}"></td>
+                <td th:text="${employee.surname}"></td>
+                <td th:text="${employee.id}"></td>
+                <td th:text="${employee.age}"></td>
+            </tr>
+            </tbody>
+        </table>
+    <a th:href="@{/employees/findByAge(age=${param.age}, page=${page.number - 1}, sort=${sortBy})}">Previous page</a>
+    <a th:href="@{/employees/findByAge(age=${param.age}, page=${page.number + 1}, sort=${sortBy})}">Next page</a>
+
+</div>
+
+
+
+</body>
+</html>

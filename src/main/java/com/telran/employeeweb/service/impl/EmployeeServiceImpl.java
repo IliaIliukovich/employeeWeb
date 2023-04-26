@@ -4,6 +4,8 @@ import com.telran.employeeweb.model.entity.Employee;
 import com.telran.employeeweb.repository.EmployeeRepository;
 import com.telran.employeeweb.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +23,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getEmployees() {
+//        return repository.findAll(Sort.by("name").ascending());
+//        Page<Employee> page = repository.findAll(PageRequest.of(0, 5, Sort.by("surname")));
+//        return page.getContent();
+//        return repository.specialQuery();
+//        return repository.specialQueryTwo("Fox");
+//        return repository.specialQueryThree("Fox");
         return repository.findAll();
     }
 
     @Override
-    public List<Employee> findEmployeeByNameAndSurname(String name, String surname) {
+    public List<Employee> findEmployeeByNameOrSurname(String name, String surname) {
         return repository.findAllByNameOrSurname(name, surname);
     }
 
@@ -35,19 +43,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void add(Employee employee) {
-        repository.save(employee);
+    public Page<Employee> findAllByAgeGreaterThanEqual(Integer age, Pageable pageable) {
+        return repository.findAllByAgeGreaterThanEqual(age, pageable);
     }
 
     @Override
-    public boolean updateEmployee(Employee employee) {
-        Optional<Employee> byId = repository.findById(employee.getId());
-        if (byId.isPresent()){
-            repository.save(employee);
-            return true;
-        }
-        repository.save(employee);
-        return false;
+    public Employee addOrUpdate(Employee employee) {
+        return repository.save(employee);
     }
 
     @Override
@@ -57,8 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Employee employee = byId.get();
             employee.setSurname(surname);
             employee.setAge(age);
-            repository.save(employee);
-            return repository.findById(id).orElse(null);
+            return repository.save(employee);
         }
         return null;
     }

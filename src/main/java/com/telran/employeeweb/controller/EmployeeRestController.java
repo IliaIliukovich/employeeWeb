@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/employeesRest")
@@ -26,26 +25,23 @@ public class EmployeeRestController {
         return service.getEmployees();
     }
 
-//    @GetMapping(value = "/find")
-//    public Optional<Employee>findEmployee(@RequestParam(required = false) String id,
-//                                          @RequestParam(required = false) String name){
-//        return service.findEmployeeByNameAndSurname(id, name);
-//    }
+    @GetMapping(value = "/find")
+    public List<Employee>findEmployee(@RequestParam(required = false) String name,
+                                          @RequestParam(required = false) String surname){
+        return service.findEmployeeByNameOrSurname(name, surname);
+    }
 
     @PostMapping
     public Employee addEmployee(@RequestBody Employee employee) {
-        service.add(employee);
-        return employee;
+        Employee updatedEmployee = service.addOrUpdate(employee);
+        return updatedEmployee;
     }
 
     @PutMapping
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
-        boolean isUpdated = service.updateEmployee(employee);
-        if (isUpdated){
-            return new ResponseEntity<>(employee, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(employee, HttpStatus.CREATED);
-        }
+        Employee updatedEmployee = service.addOrUpdate(employee);
+        boolean isUpdated = updatedEmployee.getId().equals(employee.getId());
+        return new ResponseEntity<>(updatedEmployee, isUpdated ? HttpStatus.OK : HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
@@ -53,11 +49,7 @@ public class EmployeeRestController {
                                                                 @RequestParam String surname,
                                                                 @RequestParam int age){
         Employee employee = service.updateEmployeeSurnameAndAge(id, surname, age);
-        if (employee != null) {
-            return new ResponseEntity<>(employee, HttpStatus.ACCEPTED);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(employee, employee != null ? HttpStatus.ACCEPTED : HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(value = "/{id}")

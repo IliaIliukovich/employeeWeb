@@ -7,24 +7,36 @@
 <body>
 
 <h2>Employee to edit:</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Surname</th>
-    <th>Id</th>
-    <th>Age</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td th:text="${editEmployee.name}"></td>
-    <td th:text="${editEmployee.surname}"></td>
-    <td th:text="${editEmployee.id}"></td>
-    <td th:text="${editEmployee.age}"></td>
-  </tr>
-  </tbody>
-</table>
+
+<form th:action="@{/employees/editEmployeePage}" th:object="${editEmployee}" th:method="post">
+  <div>
+    <label>Name:&nbsp;</label>
+    <label>
+      <input type="text" th:field="*{name}">
+    </label>
+  </div>
+  <div>
+    <label>Surname:&nbsp;</label>
+    <label>
+      <input type="text" th:field="*{surname}">
+    </label>
+  </div>
+  <div>
+    <label>Id:&nbsp;</label>
+    <label>
+      <input type="text" th:field="*{id}">
+    </label>
+  </div>
+  <div>
+    <label>Age:&nbsp;</label>
+    <label>
+      <input type="text" th:field="*{age}">
+    </label>
+  </div>
+  <div>
+    <button type="submit">Submit</button>
+  </div>
+</form>
 
 
 
