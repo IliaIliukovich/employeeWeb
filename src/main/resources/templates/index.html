@@ -11,7 +11,15 @@
   Welcome to Employee Web App!
 </h1>
 
-<p>Some info</p>
+<h2>
+  <a th:href="@{/employees}">All employees</a>
+</h2>
+<h2>
+  <a th:href="@{/employees/find(name='Bill', surname='Gates')}">Employees by name and surname search</a>
+</h2>
+<h2>
+  <a th:href="@{/employees/findByAge(age=0, page=0, sort='name')}">Employees by age search</a>
+</h2>
 
 </body>
 </html>
