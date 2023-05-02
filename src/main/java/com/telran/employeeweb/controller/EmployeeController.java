@@ -96,7 +96,7 @@ public class EmployeeController {
             String employeeId = (String) flashMap.get("editEmployeeId");
             if (employeeId != null) {
                 Optional<Employee> employee = service.findById(employeeId);
-                model.addAttribute("editEmployee", employee.orElse(null));
+                employee.ifPresent(value -> model.addAttribute("editEmployee", value));
             }
         }
         return "editEmployeePage";
