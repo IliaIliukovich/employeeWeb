@@ -39,8 +39,9 @@ public class EmployeeRestController {
 
     @PutMapping
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
+        String employeeId = employee.getId();
         Employee updatedEmployee = service.addOrUpdate(employee);
-        boolean isUpdated = updatedEmployee.getId().equals(employee.getId());
+        boolean isUpdated = updatedEmployee.getId().equals(employeeId);
         return new ResponseEntity<>(updatedEmployee, isUpdated ? HttpStatus.OK : HttpStatus.CREATED);
     }
 
