@@ -11,6 +11,8 @@ public interface EmployeeService {
 
     List<Employee> getEmployees();
 
+    Page<Employee> getEmployees(Pageable pageable);
+
     List<Employee> findEmployeeByNameOrSurname(String id, String name);
 
     Optional<Employee> findById(String id);

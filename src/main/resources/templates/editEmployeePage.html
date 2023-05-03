@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Employee Page</title>
+    <link rel="stylesheet" href="/style.css"/>
 </head>
 <body>
 
@@ -24,7 +25,7 @@
   <div>
     <label>Id:&nbsp;</label>
     <label>
-      <input type="text" th:field="*{id}">
+      <input type="text" th:field="*{id}" th:readonly=true>
     </label>
   </div>
   <div>
@@ -33,6 +34,7 @@
       <input type="text" th:field="*{age}">
     </label>
   </div>
+  <input type="hidden" th:field="*{additionalInfo}">
   <div>
     <button type="submit">Submit</button>
   </div>

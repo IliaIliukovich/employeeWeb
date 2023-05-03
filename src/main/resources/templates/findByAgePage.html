@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Employees Search</title>
-
     <link rel="stylesheet" href="/style.css" type="text/css"/>
 </head>
 <body>
@@ -29,10 +28,10 @@
             </tr>
             <tr>
                 <th></th>
-                <th>Z->A</th>
-                <th>Z->A</th>
+                <th><a th:href="@{/employees/findByAge(age=${param.age}, page=0, sort='name,desc')}">Z->A</a></th>
+                <th><a th:href="@{/employees/findByAge(age=${param.age}, page=0, sort='surname,desc')}">Z->A</a></th>
                 <th></th>
-                <th>9->0</th>
+                <th><a th:href="@{/employees/findByAge(age=${param.age}, page=0, sort='age,desc')}">9->0</a></th>
             </tr>
             </thead>
             <tbody>

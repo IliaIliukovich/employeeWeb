@@ -33,6 +33,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Page<Employee> getEmployees(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    @Override
     public List<Employee> findEmployeeByNameOrSurname(String name, String surname) {
         return repository.findAllByNameOrSurname(name, surname);
     }

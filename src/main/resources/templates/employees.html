@@ -18,6 +18,7 @@
         <th>Surname</th>
         <th>Id</th>
         <th>Age</th>
+        <th>Additiona Info</th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
         <td th:text="${employee.surname}"></td>
         <td th:text="${employee.id}"></td>
         <td th:text="${employee.age}"></td>
+        <td th:text="${employee.additionalInfo}"></td>
         <td>
             <form th:action="@{/employees/edit}" th:method="post">
                 <div>
@@ -68,15 +70,15 @@
         </label>
     </div>
     <div>
-        <label>Id:&nbsp;</label>
-        <label>
-            <input type="text" th:field="*{id}">
-        </label>
-    </div>
-    <div>
         <label>Age:&nbsp;</label>
         <label>
             <input type="text" th:field="*{age}">
+        </label>
+    </div>
+    <div>
+        <label>Additional Info:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{additionalInfo}">
         </label>
     </div>
     <div>
@@ -92,6 +94,9 @@
 </div>
 <div th:if="${updated}">
     Employee with id <span th:text="${updated}"></span> successfully updated
+</div>
+<div th:if="${error}">
+    <span th:text="${error}" class="error"></span>
 </div>
 
 </body>

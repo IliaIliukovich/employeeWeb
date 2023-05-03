@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Employee Page</title>
+    <link rel="stylesheet" href="/style.css"/>
 </head>
 <body>
 
@@ -15,6 +16,7 @@
     <th>Surname</th>
     <th>Id</th>
     <th>Age</th>
+    <th>Additional Info</th>
   </tr>
   </thead>
   <tbody>
@@ -23,14 +25,12 @@
     <td th:text="${editEmployee.surname}"></td>
     <td th:text="${editEmployee.id}"></td>
     <td th:text="${editEmployee.age}"></td>
+    <td th:text="${editEmployee.additionalInfo}"></td>
   </tr>
   </tbody>
 </table>
 
 <form th:action="@{/employees/confirmPage}" th:method="post">
-  <div>
-    <input type="hidden" th:value="${editEmployee.id}" name="employeeId">
-  </div>
   <div>
     <button type="submit">Confirm</button>
   </div>

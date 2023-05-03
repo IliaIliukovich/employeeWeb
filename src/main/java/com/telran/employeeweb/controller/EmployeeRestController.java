@@ -2,12 +2,20 @@ package com.telran.employeeweb.controller;
 
 import com.telran.employeeweb.model.entity.Employee;
 import com.telran.employeeweb.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/employeesRest")
@@ -25,6 +33,11 @@ public class EmployeeRestController {
         return service.getEmployees();
     }
 
+    @GetMapping("/page")
+    public Page<Employee> getEmployeesPage(@PageableDefault(size = 5) Pageable pageable){
+        return service.getEmployees(pageable);
+    }
+
     @GetMapping(value = "/find")
     public List<Employee>findEmployee(@RequestParam(required = false) String name,
                                           @RequestParam(required = false) String surname){
@@ -38,7 +51,7 @@ public class EmployeeRestController {
     }
 
     @PutMapping
-    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
+    public ResponseEntity<Employee> updateEmployee(@Valid @RequestBody Employee employee){
         String employeeId = employee.getId();
         Employee updatedEmployee = service.addOrUpdate(employee);
         boolean isUpdated = updatedEmployee.getId().equals(employeeId);
@@ -57,5 +70,18 @@ public class EmployeeRestController {
     public void deleteEmployee(@PathVariable String id){
         System.out.println("Deleting:" + id);
         service.deleteEmployee(id);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 }
