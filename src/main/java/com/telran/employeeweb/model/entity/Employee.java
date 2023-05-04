@@ -33,7 +33,7 @@ public class Employee {
     @Length(max = 255, message = "Max length is 255")
     private String additionalInfo;
 
-    @Email(regexp = "[a-z]+@[a-z]+.[a-z]+", message = "Enter a valid email")
+    @Email(regexp = "^$|([a-z]+@[a-z]+.[a-z]+)", message = "Enter a valid email")
 //    @Pattern(regexp = "[a-z]+@[a-z]+.[a-z]+")
     private String email;
 

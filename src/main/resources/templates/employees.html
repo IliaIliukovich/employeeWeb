@@ -18,7 +18,8 @@
         <th>Surname</th>
         <th>Id</th>
         <th>Age</th>
-        <th>Additiona Info</th>
+        <th>Email</th>
+        <th>Additional Info</th>
     </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
         <td th:text="${employee.surname}"></td>
         <td th:text="${employee.id}"></td>
         <td th:text="${employee.age}"></td>
+        <td th:text="${employee.email}"></td>
         <td th:text="${employee.additionalInfo}"></td>
         <td>
             <form th:action="@{/employees/edit}" th:method="post">
@@ -73,6 +75,12 @@
         <label>Age:&nbsp;</label>
         <label>
             <input type="text" th:field="*{age}">
+        </label>
+    </div>
+    <div>
+        <label>Email:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{email}">
         </label>
     </div>
     <div>
