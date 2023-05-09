@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
 
     @InitBinder
     public void addBinder(WebDataBinder binder) {
-        if (binder.getTarget() != null && binder.getTarget().getClass().equals(User.class)) {
+        if (binder.getTarget() != null && validator.supports(binder.getTarget().getClass())) {
             binder.addValidators(validator);
         }
     }
