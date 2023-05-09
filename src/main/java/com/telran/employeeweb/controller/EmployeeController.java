@@ -3,7 +3,7 @@ package com.telran.employeeweb.controller;
 import com.telran.employeeweb.model.entity.Employee;
 import com.telran.employeeweb.service.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
+import jakarta.validation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -12,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -22,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/employees")
@@ -120,9 +122,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/editEmployeePage")
-    public String sendEditedEmployee(@ModelAttribute Employee employee, Model model){
-        model.addAttribute("editEmployee", employee);
-        return "redirect:/employees/editEmployeePage2";
+    public String sendEditedEmployee(@Valid @ModelAttribute("editEmployee") Employee employee,
+                                     BindingResult result, Model model){
+        if (!result.hasErrors()) {
+            model.addAttribute("editEmployee", employee);
+            return "redirect:/employees/editEmployeePage2";
+        }
+        return "editEmployeePage";
     }
 
     @GetMapping("/editEmployeePage2")
@@ -131,9 +137,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/editEmployeePage2")
-    public String sendEditedEmployee2(@ModelAttribute Employee employee, Model model){
-        model.addAttribute("editEmployee", employee);
-        return "redirect:/employees/confirmPage";
+    public String sendEditedEmployee2(@Valid @ModelAttribute("editEmployee") Employee employee,
+                                      BindingResult result, Model model){
+        if (!result.hasErrors()) {
+            model.addAttribute("editEmployee", employee);
+            return "redirect:/employees/confirmPage";
+        }
+        return "editEmployeePage2";
     }
 
     @GetMapping("/confirmPage")
@@ -148,6 +158,18 @@ public class EmployeeController {
         attributes.addFlashAttribute("updated", updated.getId());
         status.setComplete();
         return "redirect:/employees";
+
+        // Example of validation
+//        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+//        Validator validator = factory.getValidator();
+//        Set<ConstraintViolation<Employee>> violations = validator.validate(employee);
+//        if (violations.isEmpty()) {
+//            Employee updated = service.addOrUpdate(employee);
+//            attributes.addFlashAttribute("updated", updated.getId());
+//            status.setComplete();
+//            return "redirect:/employees";
+//        }
+//        throw new ConstraintViolationException(violations);
     }
 
     @ModelAttribute("editEmployee")

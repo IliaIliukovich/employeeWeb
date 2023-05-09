@@ -9,36 +9,30 @@
 
 <h2>Employee to edit:</h2>
 
-<form th:action="@{/employees/editEmployeePage}" th:object="${editEmployee}" th:method="post">
-  <div>
-    <label>Name:&nbsp;</label>
-    <label>
-      <input type="text" th:field="*{name}">
-    </label>
+<form th:action="@{/employees/editEmployeePage}" th:object="${editEmployee}" method="post" class="form">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name">
+    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
   </div>
-  <div>
-    <label>Surname:&nbsp;</label>
-    <label>
-      <input type="text" th:field="*{surname}">
-    </label>
+  <div class="form-group">
+    <label for="surname">Surname:</label>
+    <input class="form-control" type="text" th:field="*{surname}" id="surname" placeholder="Surname">
+    <div class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
   </div>
-  <div>
-    <label>Id:&nbsp;</label>
-    <label>
-      <input type="text" th:field="*{id}" th:readonly=true>
-    </label>
+  <div class="form-group">
+    <label for="id">Id:</label>
+    <input class="form-control" type="text" th:field="*{id}" id="id" placeholder="Id" th:readonly=true>
   </div>
-  <div>
-    <label>Age:&nbsp;</label>
-    <label>
-      <input type="text" th:field="*{age}">
-    </label>
+  <div class="form-group">
+    <label for="age">Age:</label>
+    <input class="form-control" type="text" th:field="*{age}" id="age" placeholder="Age">
+    <div class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
   </div>
-  <div>
-    <label>Email:&nbsp;</label>
-    <label>
-      <input type="text" th:field="*{email}">
-    </label>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input class="form-control" type="text" th:field="*{email}" id="email" placeholder="Email">
+    <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
   </div>
   <input type="hidden" th:field="*{additionalInfo}">
   <div>

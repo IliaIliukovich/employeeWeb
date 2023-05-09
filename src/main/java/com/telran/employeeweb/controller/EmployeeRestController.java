@@ -3,22 +3,23 @@ package com.telran.employeeweb.controller;
 import com.telran.employeeweb.model.entity.Employee;
 import com.telran.employeeweb.service.EmployeeService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/employeesRest")
+@Validated
 public class EmployeeRestController {
 
     private final EmployeeService service;
@@ -60,8 +61,11 @@ public class EmployeeRestController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Employee> updateEmployeeSurnameAndAge(@PathVariable String id,
-                                                                @RequestParam String surname,
-                                                                @RequestParam int age){
+                                                                @RequestParam
+                                                                @NotBlank(message = "Put a valid surname, please")
+                                                                @Length(max = 20, message = "Max length is 20")
+                                                                String surname,
+                                                                @RequestParam @Min(18) int age){
         Employee employee = service.updateEmployeeSurnameAndAge(id, surname, age);
         return new ResponseEntity<>(employee, employee != null ? HttpStatus.ACCEPTED : HttpStatus.NOT_FOUND);
     }
@@ -72,16 +76,4 @@ public class EmployeeRestController {
         service.deleteEmployee(id);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
-            MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
-    }
 }
