@@ -9,17 +9,22 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {EmployeeRestController.class, UserValidator.class})
+@WebMvcTest(controllers = EmployeeRestController.class)
+//@Import(UserValidator.class)
 public class EmployeeRestControllerTest {
 
     @MockBean
     private EmployeeService service;
+
+    @MockBean
+    private UserValidator validator;
 
     @Autowired
     MockMvc mockMvc;
