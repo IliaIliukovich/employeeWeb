@@ -2,6 +2,7 @@ package com.telran.employeeweb.controller;
 
 import com.telran.employeeweb.model.entity.Employee;
 import com.telran.employeeweb.service.EmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +30,7 @@ public class EmployeeRestController {
         this.service = service;
     }
 
+    @Operation(summary = "Get list of all Employees")
     @GetMapping
     public List<Employee> getEmployees(){
         return service.getEmployees();
