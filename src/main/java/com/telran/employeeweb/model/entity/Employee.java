@@ -19,7 +19,7 @@ public class Employee {
     private String id;
 
 //    @Column(name = "name_in_database")
-    @NotBlank(message = "Put a valid name, please")
+    @NotBlank(message = "{validation.employee.name}")
     @Length(max = 20, message = "Max length is 20")
     private String name;
 
