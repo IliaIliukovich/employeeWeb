@@ -1,7 +1,11 @@
 package com.telran.employeeweb.service.impl;
 
 import com.telran.employeeweb.model.entity.Employee;
+import com.telran.employeeweb.model.entity.Office;
+import com.telran.employeeweb.model.entity.PersonalDetail;
 import com.telran.employeeweb.repository.EmployeeRepository;
+import com.telran.employeeweb.repository.OfficeRepository;
+import com.telran.employeeweb.repository.PersonalDetailRepository;
 import com.telran.employeeweb.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,9 +20,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository repository;
 
+    private final PersonalDetailRepository personalDetailRepository;
+
+    private final OfficeRepository officeRepository;
+
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository repository) {
+    public EmployeeServiceImpl(EmployeeRepository repository,
+                               PersonalDetailRepository personalDetailRepository,
+                               OfficeRepository officeRepository) {
         this.repository = repository;
+        this.personalDetailRepository = personalDetailRepository;
+        this.officeRepository = officeRepository;
     }
 
     @Override
@@ -54,6 +66,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addOrUpdate(Employee employee) {
+        // This is for example, personalDetail should be filled from the request
+        PersonalDetail personalDetail = new PersonalDetail();
+        personalDetail.setPassportData(employee.getName() + " passport data");
+        personalDetail.setHomeAddress("Home address");
+        personalDetail = personalDetailRepository.save(personalDetail);
+        employee.setPersonalDetail(personalDetail);
+
+        // This is for example, office should be filled from the request
+//        Office office = officeRepository.findById(1L).get(); // bad practice
+        Office office = officeRepository.getReferenceById(1L);
+        employee.setOffice(office);
+
         return repository.save(employee);
     }
 

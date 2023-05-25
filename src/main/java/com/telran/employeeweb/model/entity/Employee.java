@@ -20,24 +20,36 @@ public class Employee {
 
 //    @Column(name = "name_in_database")
     @NotBlank(message = "{validation.employee.name}")
-    @Length(max = 20, message = "Max length is 20")
+    @Length(max = 20, message = "{validation.employee.name.length}")
     private String name;
 
-    @NotBlank(message = "Put a valid surname, please")
-    @Length(max = 20, message = "Max length is 20")
+    @NotBlank(message = "{validation.employee.surname}")
+    @Length(max = 20, message = "{validation.employee.surname.length}")
     private String surname;
 
-    @Min(value = 18, message = "Age cannot be under 18")
+    @Min(value = 18, message = "{validation.employee.age}")
     private Integer age;
 
-    @Length(max = 255, message = "Max length is 255")
+    @Length(max = 255, message = "{validation.employee.additionalinfo}")
     private String additionalInfo;
 
-    @Email(regexp = "^$|([a-z]+@[a-z]+.[a-z]+)", message = "Enter a valid email")
+    @Email(regexp = "^$|([a-z]+@[a-z]+.[a-z]+)", message = "{validation.employee.email}")
 //    @Pattern(regexp = "[a-z]+@[a-z]+.[a-z]+")
     private String email;
+
+    @OneToOne
+    @JoinColumn(name = "personaldetail_id")
+    private PersonalDetail personalDetail;
+
+    @ManyToOne
+    @JoinColumn(name = "office_id")
+    private Office office;
 
     public Employee() {
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" + "id='" + id + '\'' + ", name='" + name + '\'' + ", surname='" + surname + "}'";
+    }
 }

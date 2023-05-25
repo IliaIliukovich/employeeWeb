@@ -3,10 +3,13 @@ package com.telran.employeeweb.controller;
 import com.telran.employeeweb.model.entity.Employee;
 import com.telran.employeeweb.service.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.*;
+import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
@@ -19,11 +22,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/employees")
@@ -31,6 +32,8 @@ import java.util.Set;
 public class EmployeeController {
 
     private final EmployeeService service;
+
+    private Logger logger = LogManager.getLogger(EmployeeController.class);
 
     @Value("${employeeNotPresentMessage}")
     private String employeeNotPresentMessage;
@@ -45,6 +48,13 @@ public class EmployeeController {
         List<Employee> employees = service.getEmployees();
         model.addAttribute("employees", employees);
         model.addAttribute("employeeToAdd", new Employee());
+//
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("Employees retrieved from db: {}", (employees.stream().map(employee -> employee.getName()).toList()));
+//        }
+        logger.debug("Employees retrieved from db: {}",
+                () -> employees.stream().map(Employee::getName).toList());
+
         return "employees";
     }
 
@@ -95,14 +105,14 @@ public class EmployeeController {
 
     @PostMapping(value = "/edit")
     public String editEmployee(@RequestParam String employeeId, RedirectAttributes attributes){
-        System.out.println("Editing " + employeeId);
+        logger.info("Editing: {}", employeeId);
         attributes.addFlashAttribute("editEmployeeId", employeeId);
         return "redirect:/employees/editEmployeePage";
     }
 
     @PostMapping(value = "/delete")
     public String deleteEmployee(@RequestParam String employeeId, RedirectAttributes attributes){
-        System.out.println("Delete " + employeeId);
+        logger.info("Deleting: {}", employeeId);
         service.deleteEmployee(employeeId);
         attributes.addFlashAttribute("deleted", employeeId);
         return "redirect:/employees";
@@ -174,7 +184,7 @@ public class EmployeeController {
 
     @ModelAttribute("editEmployee")
     public Employee getEditedEmployee(){
-        System.out.println("new Employee to edit added in Model");
+        logger.info("new Employee to edit added in Model");
         return new Employee();
     }
 
