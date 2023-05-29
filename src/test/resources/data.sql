@@ -9,3 +9,6 @@ insert into employee (name, surname, age,id)
             ('Peter', 'Fox', 22, 'e011c1bc-a971-4430-b6a4-88cac578ef30'),
             ('Tommy', 'Arams', 42, '4bb23513-73bb-4285-abf4-914034515050'),
             ('Peter', 'Smiths', 45, 'aa169339-fb76-40ca-8d44-22a43422e17c');
+
+insert into office (office_name, address)
+values ('Headquarter', 'New York');

@@ -2,6 +2,8 @@ package com.telran.employeeweb.service.impl;
 
 import com.telran.employeeweb.model.entity.Employee;
 import com.telran.employeeweb.repository.EmployeeRepository;
+import com.telran.employeeweb.repository.OfficeRepository;
+import com.telran.employeeweb.repository.PersonalDetailRepository;
 import com.telran.employeeweb.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,13 +19,19 @@ import static org.mockito.ArgumentMatchers.any;
 public class EmployeeServiceImplTest {
 
     private EmployeeRepository repository;
+    private PersonalDetailRepository personalDetailRepository;
+    private OfficeRepository officeRepository;
     private EmployeeService service;
     private List<Employee> list;
 
     @BeforeEach
     public void init(){
         repository = Mockito.mock(EmployeeRepository.class);
-        service = new EmployeeServiceImpl(repository);
+        personalDetailRepository = Mockito.mock(PersonalDetailRepository.class);
+        officeRepository = Mockito.mock(OfficeRepository.class);
+        repository = Mockito.mock(EmployeeRepository.class);
+        service = new EmployeeServiceImpl(repository, personalDetailRepository,
+                officeRepository);
 
         Employee employee1 = new Employee();
         Employee employee2 = new Employee();
