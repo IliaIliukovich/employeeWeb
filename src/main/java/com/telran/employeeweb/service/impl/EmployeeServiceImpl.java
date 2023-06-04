@@ -7,6 +7,7 @@ import com.telran.employeeweb.repository.EmployeeRepository;
 import com.telran.employeeweb.repository.OfficeRepository;
 import com.telran.employeeweb.repository.PersonalDetailRepository;
 import com.telran.employeeweb.service.EmployeeService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,6 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return repository.findAllByAgeGreaterThanEqual(age, pageable);
     }
 
+    @Transactional
     @Override
     public Employee addOrUpdate(Employee employee) {
         // This is for example, personalDetail should be filled from the request
