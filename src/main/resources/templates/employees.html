@@ -22,6 +22,7 @@
         <th>Additional Info</th>
         <th>Personal Detail</th>
         <th>Office</th>
+        <th>Job Role</th>
     </tr>
     </thead>
     <tbody>
@@ -36,6 +37,7 @@
         <td th:text="${employee.additionalInfo}"></td>
         <td th:text="${employee.personalDetail}"></td>
         <td th:text="${employee.office}"></td>
+        <td th:text="${employee.jobPosition.jobRole}"></td>
         <td>
             <form th:action="@{/employees/edit}" th:method="post">
                 <div>

@@ -1,17 +1,17 @@
 package com.telran.employeeweb.service.impl;
 
-import com.telran.employeeweb.model.entity.Employee;
-import com.telran.employeeweb.model.entity.Office;
-import com.telran.employeeweb.model.entity.PersonalDetail;
+import com.telran.employeeweb.model.entity.*;
 import com.telran.employeeweb.repository.EmployeeRepository;
 import com.telran.employeeweb.repository.OfficeRepository;
 import com.telran.employeeweb.repository.PersonalDetailRepository;
+import com.telran.employeeweb.repository.ProjectRepository;
 import com.telran.employeeweb.service.EmployeeService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,13 +25,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final OfficeRepository officeRepository;
 
+    private final ProjectRepository projectRepository;
+
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository repository,
                                PersonalDetailRepository personalDetailRepository,
-                               OfficeRepository officeRepository) {
+                               OfficeRepository officeRepository,
+                               ProjectRepository projectRepository) {
         this.repository = repository;
         this.personalDetailRepository = personalDetailRepository;
         this.officeRepository = officeRepository;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -79,6 +83,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 //        Office office = officeRepository.findById(1L).get(); // bad practice
         Office office = officeRepository.getReferenceById(1L);
         employee.setOffice(office);
+
+        Project project = projectRepository.getReferenceById(1L);
+        employee.getProjects().add(project);
+
+        JobPosition jobPosition = new JobPosition();
+        jobPosition.setJobRole(JobPosition.JobRole.GENERAL_STAFF);
+        employee.setJobPosition(jobPosition);
 
         return repository.save(employee);
     }

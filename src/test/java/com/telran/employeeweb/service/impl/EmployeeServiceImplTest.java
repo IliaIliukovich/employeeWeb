@@ -4,6 +4,7 @@ import com.telran.employeeweb.model.entity.Employee;
 import com.telran.employeeweb.repository.EmployeeRepository;
 import com.telran.employeeweb.repository.OfficeRepository;
 import com.telran.employeeweb.repository.PersonalDetailRepository;
+import com.telran.employeeweb.repository.ProjectRepository;
 import com.telran.employeeweb.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ public class EmployeeServiceImplTest {
     private EmployeeRepository repository;
     private PersonalDetailRepository personalDetailRepository;
     private OfficeRepository officeRepository;
+    private ProjectRepository projectRepository;
     private EmployeeService service;
     private List<Employee> list;
 
@@ -31,7 +33,7 @@ public class EmployeeServiceImplTest {
         officeRepository = Mockito.mock(OfficeRepository.class);
         repository = Mockito.mock(EmployeeRepository.class);
         service = new EmployeeServiceImpl(repository, personalDetailRepository,
-                officeRepository);
+                officeRepository, projectRepository);
 
         Employee employee1 = new Employee();
         Employee employee2 = new Employee();
