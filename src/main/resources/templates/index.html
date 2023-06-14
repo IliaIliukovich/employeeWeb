@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <title>Home Page for Employee Web App</title>
 
@@ -10,6 +11,10 @@
 <h1>
   Welcome to Employee Web App!
 </h1>
+<h2 th:inline="text">Hello, <span th:remove="tag" sec:authentication="name"></span>!</h2>
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="Sign Out"/>
+</form>
 
 <h2>
   <a th:href="@{/employees}">All employees</a>
@@ -20,6 +25,19 @@
 <h2>
   <a th:href="@{/employees/findByAge(age=0, page=0, sort='name')}">Employees by age search</a>
 </h2>
+
+
+<div sec:authorize="isAuthenticated()">
+  This content is only shown to authenticated users.
+  <div>User name: <span sec:authentication="name"></span></div>
+  <div>User roles: <span sec:authentication="principal.authorities"></span></div>
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  This content is only shown to administrators.
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+  This content is only shown to users.
+</div>
 
 </body>
 </html>

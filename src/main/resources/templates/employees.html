@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Employees List</title>
@@ -7,6 +9,10 @@
     <link rel="stylesheet" href="/style.css" type="text/css"/>
 </head>
 <body>
+<h2 th:inline="text">Hello, <span th:remove="tag" sec:authentication="name"></span>!</h2>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 
 <h2>Employees</h2>
 
@@ -38,6 +44,7 @@
         <td th:text="${employee.personalDetail}"></td>
         <td th:text="${employee.office}"></td>
         <td th:text="${employee.jobPosition.jobRole}"></td>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
         <td>
             <form th:action="@{/employees/edit}" th:method="post">
                 <div>
@@ -58,59 +65,61 @@
                 </div>
             </form>
         </td>
+        </div>
     </tr>
     </tbody>
 </table>
 
-<h2>Add new Employee:</h2>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <h2>Add new Employee:</h2>
+    <form th:action="@{/employees}" th:object="${employeeToAdd}" th:method="post">
+        <div>
+            <label>Name:&nbsp;</label>
+            <label>
+                <input type="text" th:field="*{name}">
+            </label>
+        </div>
+        <div>
+            <label>Surname:&nbsp;</label>
+            <label>
+                <input type="text" th:field="*{surname}">
+            </label>
+        </div>
+        <div>
+            <label>Age:&nbsp;</label>
+            <label>
+                <input type="text" th:field="*{age}">
+            </label>
+        </div>
+        <div>
+            <label>Email:&nbsp;</label>
+            <label>
+                <input type="text" th:field="*{email}">
+            </label>
+        </div>
+        <div>
+            <label>Additional Info:&nbsp;</label>
+            <label>
+                <input type="text" th:field="*{additionalInfo}">
+            </label>
+        </div>
+        <div>
+            <button type="submit">Add</button>
+        </div>
+    </form>
 
-<form th:action="@{/employees}" th:object="${employeeToAdd}" th:method="post">
-    <div>
-        <label>Name:&nbsp;</label>
-        <label>
-            <input type="text" th:field="*{name}">
-        </label>
+    <div th:if="${deleted}">
+        Employee with id <span th:text="${deleted}"></span> successfully deleted
     </div>
-    <div>
-        <label>Surname:&nbsp;</label>
-        <label>
-            <input type="text" th:field="*{surname}">
-        </label>
+    <div th:if="${added}">
+        Employee with id <span th:text="${added}"></span> successfully added
     </div>
-    <div>
-        <label>Age:&nbsp;</label>
-        <label>
-            <input type="text" th:field="*{age}">
-        </label>
+    <div th:if="${updated}">
+        Employee with id <span th:text="${updated}"></span> successfully updated
     </div>
-    <div>
-        <label>Email:&nbsp;</label>
-        <label>
-            <input type="text" th:field="*{email}">
-        </label>
+    <div th:if="${error}">
+        <span th:text="${error}" class="error"></span>
     </div>
-    <div>
-        <label>Additional Info:&nbsp;</label>
-        <label>
-            <input type="text" th:field="*{additionalInfo}">
-        </label>
-    </div>
-    <div>
-        <button type="submit">Add</button>
-    </div>
-</form>
-
-<div th:if="${deleted}">
-    Employee with id <span th:text="${deleted}"></span> successfully deleted
-</div>
-<div th:if="${added}">
-    Employee with id <span th:text="${added}"></span> successfully added
-</div>
-<div th:if="${updated}">
-    Employee with id <span th:text="${updated}"></span> successfully updated
-</div>
-<div th:if="${error}">
-    <span th:text="${error}" class="error"></span>
 </div>
 
 </body>

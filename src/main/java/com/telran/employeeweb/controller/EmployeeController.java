@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -91,6 +92,7 @@ public class EmployeeController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addEmployee(@Valid @ModelAttribute Employee employeeToAdd, RedirectAttributes attributes) {
         Employee added = service.addOrUpdate(employeeToAdd);
         attributes.addFlashAttribute("added", added.getId());
@@ -104,6 +106,7 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/edit")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String editEmployee(@RequestParam String employeeId, RedirectAttributes attributes){
         logger.info("Editing: {}", employeeId);
         attributes.addFlashAttribute("editEmployeeId", employeeId);
@@ -111,6 +114,7 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteEmployee(@RequestParam String employeeId, RedirectAttributes attributes){
         logger.info("Deleting: {}", employeeId);
         service.deleteEmployee(employeeId);
@@ -119,6 +123,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/editEmployeePage")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String editEmployeePage(Model model, HttpServletRequest request){
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
         if (flashMap != null) {
@@ -132,6 +137,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/editEmployeePage")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String sendEditedEmployee(@Valid @ModelAttribute("editEmployee") Employee employee,
                                      BindingResult result, Model model){
         if (!result.hasErrors()) {
@@ -142,11 +148,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/editEmployeePage2")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String editEmployeePage2(){
         return "editEmployeePage2";
     }
 
     @PostMapping("/editEmployeePage2")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String sendEditedEmployee2(@Valid @ModelAttribute("editEmployee") Employee employee,
                                       BindingResult result, Model model){
         if (!result.hasErrors()) {
@@ -157,11 +165,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/confirmPage")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String confirmEmployeePage(){
         return "confirmEmployeeEditPage";
     }
 
     @PostMapping("/confirmPage")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String updateEmployee(Model model, RedirectAttributes attributes, SessionStatus status){
         Employee employee = (Employee) model.getAttribute("editEmployee");
         Employee updated = service.addOrUpdate(employee);

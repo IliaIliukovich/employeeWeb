@@ -21,3 +21,8 @@ values ('Headquarter', 'New York');
 
 insert into project (name, description)
 values ('Project A', 'First project to do');
+
+insert into employeewebuser (username, password, role)
+values ('admin', '$2a$10$1VrjKoROlEorStivD59L/uEML1U5ocM2KO0hFvEsANjtsaJZCVDjq', 'ROLE_ADMIN'),
+       ('tom', '$2a$10$1VrjKoROlEorStivD59L/uEML1U5ocM2KO0hFvEsANjtsaJZCVDjq', 'ROLE_USER'),
+       ('bob', '$2a$10$1VrjKoROlEorStivD59L/uEML1U5ocM2KO0hFvEsANjtsaJZCVDjq', 'ROLE_USER');
