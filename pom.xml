@@ -85,6 +85,15 @@
             <version>2.1.212</version>
             <scope>test</scope>
         </dependency>
+
+
+<!--        Library for RSS feed support -->
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
 <!--        XML REST data format-->
 <!--        <dependency>-->
 <!--            <groupId>com.fasterxml.jackson.dataformat</groupId>-->
