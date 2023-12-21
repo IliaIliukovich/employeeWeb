@@ -31,7 +31,6 @@ public class EmployeeServiceImplTest {
         repository = Mockito.mock(EmployeeRepository.class);
         personalDetailRepository = Mockito.mock(PersonalDetailRepository.class);
         officeRepository = Mockito.mock(OfficeRepository.class);
-        repository = Mockito.mock(EmployeeRepository.class);
         service = new EmployeeServiceImpl(repository, personalDetailRepository,
                 officeRepository, projectRepository);
 
