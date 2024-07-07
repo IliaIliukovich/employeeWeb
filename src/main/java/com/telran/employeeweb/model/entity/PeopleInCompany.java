@@ -38,8 +38,8 @@ public abstract class PeopleInCompany {
     @Length(max = 255, message = "{validation.employee.additionalinfo}")
     private String additionalInfo;
 
-    @Email(regexp = "^$|([a-z]+@[a-z]+.[a-z]+)", message = "{validation.employee.email}")
-//    @Pattern(regexp = "[a-z]+@[a-z]+.[a-z]+")
+    @Email(regexp = "^$|([a-z]+@[a-z]+\\.[a-z]+)", message = "{validation.employee.email}")
+//    @Pattern(regexp = "[a-z]+@[a-z]+\\.[a-z]+")
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
